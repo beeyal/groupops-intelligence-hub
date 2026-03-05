@@ -1,0 +1,95 @@
+/* Ausnet GroupOps Intelligence Hub - Global Styles */
+
+:root {
+  /* Databricks-inspired dark theme */
+  --bg-primary: #1C2333;
+  --bg-secondary: #232B3E;
+  --bg-card: #283044;
+  --bg-card-hover: #2F3A52;
+  --bg-input: #1A2235;
+
+  --accent: #FF3621;
+  --accent-hover: #E62E1A;
+  --accent-light: rgba(255, 54, 33, 0.15);
+
+  --green: #22c55e;
+  --green-bg: rgba(34, 197, 94, 0.15);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245, 158, 11, 0.15);
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.15);
+
+  --text-primary: #E8ECF4;
+  --text-secondary: #9BA3B5;
+  --text-muted: #6B7280;
+
+  --border: #374258;
+  --border-amber: #f59e0b;
+
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
