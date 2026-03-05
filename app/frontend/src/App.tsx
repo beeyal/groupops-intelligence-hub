@@ -20,11 +20,11 @@ function App() {
       <header className="app-header">
         <div className="header-left">
           <h1>GroupOps Intelligence Hub</h1>
-          <span className="brand">Ausnet</span>
+          <span className="brand">Energy &amp; Utilities</span>
         </div>
         <div className="header-right">
           <span className="header-timestamp">
-            {now.toLocaleString('en-AU', {
+            {now.toLocaleString('en-GB', {
               weekday: 'short',
               day: 'numeric',
               month: 'short',

@@ -1,6 +1,6 @@
-# GroupOps Intelligence Hub — Ausnet Demo
+# GroupOps Intelligence Hub
 
-> **A Databricks App demo for Ausnet's Group Operations team** — unifying SAP and AVEVA data into a single operational intelligence platform with AI-assisted querying.
+> **A Databricks App for energy and utilities Group Operations teams** — unifying SAP and AVEVA data into a single operational intelligence platform with AI-assisted querying.
 
 ![Full Dashboard](docs/screenshots/full-dashboard.png)
 
@@ -8,7 +8,7 @@
 
 ## The Problem
 
-Ausnet's GroupOps team manages electricity and gas distribution infrastructure across four Australian zones (Northern, Eastern, Southern, Western). Their operational data lives in two completely disconnected systems:
+A typical energy and utilities GroupOps team manages electricity and gas distribution infrastructure across multiple geographic zones. Their operational data lives in two completely disconnected systems:
 
 | System | What it holds |
 |--------|--------------|
@@ -88,7 +88,7 @@ An embedded AI chat panel backed by **Databricks Foundation Model API** (Llama 3
 └────────────────────┬────────────────────────────────┘
                      ↓
 ┌─────────────────────────────────────────────────────┐
-│      Gold Delta Tables — ausnet_demo.groupops.*      │
+│         Gold Delta Tables — Unity Catalog            │
 │  ┌──────────────────────┬───────────────────────┐   │
 │  │  asset_health_360    │     fault_events       │   │
 │  │  (200 assets)        │     (1,000 events)     │   │
@@ -96,7 +96,7 @@ An embedded AI chat panel backed by **Databricks Foundation Model API** (Llama 3
 │  │  work_orders         │     sensor_trends      │   │
 │  │  (400 WOs)           │     (18,200 rows)      │   │
 │  └──────────────────────┴───────────────────────┘   │
-│              Unity Catalog — ausnet_demo              │
+│        (groupops.asset_health_360, fault_events…)    │
 └──────────────┬──────────────────────┬───────────────┘
                ↓                      ↓
    ┌───────────────────┐   ┌─────────────────────┐
@@ -174,7 +174,7 @@ The chat endpoint detects intent from the user's message and runs a targeted SQL
 
 A [Databricks Genie Space](https://fe-sandbox-serverless-sandbox-beyza.cloud.databricks.com/genie/rooms/01f1182ef2011e7e842b495788150cde) is configured over all 4 gold tables with:
 
-- **Business context** tuned to Ausnet's asset types, zones, SAP/AVEVA data model
+- **Business context** tuned to energy utility asset types, zones, SAP/AVEVA data model
 - **5 pre-configured demo questions** with verified SQL answers
 
 | Demo question | SQL highlights |
@@ -189,8 +189,8 @@ A [Databricks Genie Space](https://fe-sandbox-serverless-sandbox-beyza.cloud.dat
 
 ## Databricks Features Showcased
 
-| Feature | Ausnet Relevance |
-|---------|-----------------|
+| Feature | Energy & Utilities Relevance |
+|---------|------------------------------|
 | **Unity Catalog** | Governance story — lineage, access control, data discovery across SAP + AVEVA |
 | **Delta Lake (Gold tables)** | Replaces their Synapse reporting layer with open, performant format |
 | **Databricks App** | Purpose-built GroupOps UI — single pane of glass across both systems |
@@ -203,7 +203,7 @@ A [Databricks Genie Space](https://fe-sandbox-serverless-sandbox-beyza.cloud.dat
 ## Project Structure
 
 ```
-ausnet-demo-groupopsapp/
+groupops-intelligence-hub/
 ├── app/
 │   ├── app.py              # FastAPI entry point — serves API + static frontend
 │   ├── app.yaml            # Databricks App config (OAuth resources)
@@ -225,9 +225,9 @@ ausnet-demo-groupopsapp/
 │           └── hooks/
 │               └── useApi.ts
 ├── scripts/
-│   └── generate_ausnet_gold_tables.py   # Synthetic data generation (Faker + PySpark)
+│   └── generate_gold_tables.py          # Synthetic data generation (Faker + PySpark)
 ├── status/                              # Build tracking docs per workstream
-├── ausnet-groupops-prd.md              # Full product requirements document
+├── prd.md                              # Full product requirements document
 └── README.md
 ```
 
@@ -239,7 +239,7 @@ ausnet-demo-groupopsapp/
 - Python 3.11+
 - Node 18+
 - Databricks CLI configured with profile `fe-vm-sandbox-serverless-sandbox-beyza`
-- Gold tables already created in `ausnet_demo.groupops.*`
+- Gold tables already created in the `groupops` schema under Unity Catalog
 
 ### Backend
 
@@ -262,8 +262,8 @@ npm run dev        # dev server on :5173 with proxy to :8000
 
 ```bash
 # Upload and run the generation notebook in your Databricks workspace
-databricks workspace import scripts/generate_ausnet_gold_tables.py \
-  /Users/<your-user>/ausnet-data-gen --profile <your-profile>
+databricks workspace import scripts/generate_gold_tables.py \
+  /Users/<your-user>/groupops-data-gen --profile <your-profile>
 ```
 
 ---
@@ -272,8 +272,8 @@ databricks workspace import scripts/generate_ausnet_gold_tables.py \
 
 ```bash
 cd app
-databricks sync . /Workspace/Users/<your-user>/ausnet-groupops-hub --profile <profile>
-databricks apps deploy ausnet-groupops-hub --profile <profile>
+databricks sync . /Workspace/Users/<your-user>/groupops-intelligence-hub --profile <profile>
+databricks apps deploy groupops-intelligence-hub --profile <profile>
 ```
 
 The `app.yaml` defines the SQL warehouse and LLM serving endpoint as OAuth resources — no tokens needed at runtime.
@@ -286,4 +286,4 @@ The `app.yaml` defines the SQL warehouse and LLM serving endpoint as OAuth resou
 |----------|-----|
 | **Databricks App** | https://ausnet-groupops-hub-7474651325821186.aws.databricksapps.com |
 | **Genie Space** | https://fe-sandbox-serverless-sandbox-beyza.cloud.databricks.com/genie/rooms/01f1182ef2011e7e842b495788150cde |
-| **Unity Catalog** | `ausnet_demo.groupops.*` on `fe-sandbox-serverless-sandbox-beyza` |
+| **Unity Catalog** | `groupops.*` schema on `fe-sandbox-serverless-sandbox-beyza` |

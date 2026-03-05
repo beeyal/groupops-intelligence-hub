@@ -7,7 +7,7 @@ from server.db import execute_query
 
 logger = logging.getLogger(__name__)
 
-SYSTEM_PROMPT = """You are an operational intelligence assistant for Ausnet's GroupOps team.
+SYSTEM_PROMPT = """You are an operational intelligence assistant for an energy and utilities Group Operations team.
 You have access to unified SAP and AVEVA data:
 - SAP: work orders (PM/CM/Emergency), maintenance history, costs
 - AVEVA: sensor readings, fault events, alarms

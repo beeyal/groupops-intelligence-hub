@@ -1,4 +1,4 @@
-"""Ausnet GroupOps Intelligence Hub - FastAPI entry point."""
+"""GroupOps Intelligence Hub - FastAPI entry point."""
 
 import logging
 from pathlib import Path
@@ -24,8 +24,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Ausnet GroupOps Intelligence Hub",
-    description="Unified operational intelligence for Ausnet's GroupOps team",
+    title="GroupOps Intelligence Hub",
+    description="Unified operational intelligence for energy & utilities operations teams",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -65,7 +65,7 @@ else:
     @app.get("/")
     async def root():
         return {
-            "app": "Ausnet GroupOps Intelligence Hub",
+            "app": "GroupOps Intelligence Hub",
             "status": "Backend running. Frontend not built yet.",
             "endpoints": [
                 "/api/health-summary",
